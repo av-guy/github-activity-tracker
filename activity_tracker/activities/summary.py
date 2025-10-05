@@ -1,5 +1,4 @@
 from typing import Any
-from requests.exceptions import HTTPError
 
 from ..protocols.events import Events
 from ..protocols.cache import Cache
