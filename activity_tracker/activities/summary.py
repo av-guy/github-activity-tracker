@@ -44,7 +44,6 @@ class ActivitySummary:
 
         self.display_summary()
 
-
     def display_summary(self):
         print("")
 
