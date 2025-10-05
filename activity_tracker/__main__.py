@@ -48,7 +48,7 @@ def main(
     event_filter: EVENTS_FILTER = None
 ):
     """
-    Search recent activity for the provided USER_NAME, optionally applying the chosen
+    Search recent GitHub activity for the provided USER_NAME, optionally applying the chosen
     --FILTER. Data is cached for 30 minutes between runs. You can bypass the cache
     and pull directly from the API by setting the --NO-CACHE flag.
     """
