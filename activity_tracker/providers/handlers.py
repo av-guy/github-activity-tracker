@@ -3,7 +3,7 @@ from typing import Any
 
 def handle_push_event(event: dict[str, Any]) -> tuple[str, str, int]:
     repo = event.get("repo", {}).get("name", "Unknown Repo")
-    commits = event.get("payload", {}).get("commits", [])
+    commits = event.get("payload", {}).get("commits", None)
     count = len(commits) if isinstance(commits, list) else 1
     return "PushEvent", repo, count
 

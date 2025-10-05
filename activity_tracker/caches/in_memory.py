@@ -14,7 +14,7 @@ class CacheProvider(Generic[P]):
 
 
 class InMemory:
-    CACHE_FILE = Path(".cache.pkl")
+    CACHE_FILE: Path = Path(".cache.pkl")
     EXPIRATION_MINUTES = 30
 
     def __init__(self):
@@ -33,13 +33,13 @@ class InMemory:
         self._json_cache[username] = data
 
     def get_json_response(self, username: str) -> list[dict[str, Any]] | None:
-        return self._json_cache.get(username)
+        return self._json_cache.get(username, {})
 
     def cache_events(self, username: str, summary: dict[tuple[str, str], int]) -> None:
         self._events_cache[username] = summary
 
     def get_events(self, username: str) -> dict[tuple[str, str], int] | None:
-        return self._events_cache.get(username)
+        return self._events_cache.get(username, {})
 
     def save(self) -> None:
         data = {

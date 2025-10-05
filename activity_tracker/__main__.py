@@ -1,6 +1,7 @@
 from typing import Annotated
 from typer import Typer, Argument, Option
 from rich.progress import Progress, SpinnerColumn, TextColumn
+from requests.exceptions import HTTPError
 from kink import di
 
 from . import bootstrap
@@ -63,7 +64,10 @@ def main(
             event_filter=event_filter
         )
 
-        activity_summary.run(no_cache=no_cache)
+        try:
+            activity_summary.run(no_cache=no_cache)
+        except HTTPError as exc:
+            print(exc)
 
 
 if __name__ == "__main__":

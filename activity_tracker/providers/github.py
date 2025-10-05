@@ -22,8 +22,8 @@ class EventsProvider(Generic[P]):
 
 
 class GitHub:
-    API_URL_TEMPLATE = "https://api.github.com/users/{username}/events/public"
-    HEADERS = {"Accept": "application/vnd.github+json"}
+    API_URL_TEMPLATE: str = "https://api.github.com/users/{username}/events/public"
+    HEADERS: dict[str, str] = {"Accept": "application/vnd.github+json"}
 
     _HANDLERS: dict[str, Callable[[dict[str, Any]], tuple[str, str, int]]] = {
         "PushEvent": handle_push_event,
