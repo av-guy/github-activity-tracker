@@ -11,12 +11,12 @@ from .events import (
     handle_pull_request_event
 )
 
-from ..protocols.provider import RepositoryProvider
+from ..protocols.events import Events
 
-P = TypeVar("P", bound=RepositoryProvider)
+P = TypeVar("P", bound=Events)
 
 
-class Provider(Generic[P]):
+class EventsProvider(Generic[P]):
     def __init__(self, provider: P):
         self.provider = provider
 

@@ -1,12 +1,14 @@
 from typing import Any
 from requests.exceptions import HTTPError
 
-from ..protocols.provider import RepositoryProvider
+from ..protocols.events import Events
+from ..protocols.cache import Cache
+
 from .descriptors import EVENT_DESCRIPTORS, EventDescriptor
 
 
 class ActivitySummary:
-    def __init__(self, username: str, provider: RepositoryProvider):
+    def __init__(self, username: str, provider: Events):
         self.username = username
         self.provider = provider
 

@@ -5,7 +5,9 @@ from kink import di
 from . import bootstrap
 
 from .activities.summary import ActivitySummary
-from .providers.github import Provider, GitHub
+
+from .providers.github import EventsProvider, GitHub
+from .caches.in_memory import CacheProvider, InMemory
 
 app = Typer()
 
@@ -19,18 +21,22 @@ USER_NAME_ARGUMENT = Annotated[
 NO_CACHE_ARGUMENT = Annotated[
     bool,
     Option(
-        '--no-cache'
-        '--n',
-        help="Set to bypass cached result."
+        '--no-cache',
+        '-n',
+        help="Bypass the cached result, resetting the in-memory cache."
     )
 ]
 
 
 @app.command()
-def main(user_name: str):
-    github_provider: Provider[GitHub] = di[Provider[GitHub]]
-    activity_summary = ActivitySummary(user_name, github_provider.provider)
+def main(user_name: USER_NAME_ARGUMENT, cache: NO_CACHE_ARGUMENT = False):
+    github_provider: EventsProvider[GitHub] = di[EventsProvider[GitHub]]
+    cache_provider: CacheProvider[InMemory] = di[CacheProvider[InMemory]]
 
+    if cache:
+        print("Should not cache")
+
+    activity_summary = ActivitySummary(user_name, github_provider.provider)
     activity_summary.run()
 
 
