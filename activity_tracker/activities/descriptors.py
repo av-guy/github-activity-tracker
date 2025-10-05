@@ -1,3 +1,4 @@
+from enum import Enum
 from dataclasses import dataclass
 
 
@@ -7,6 +8,23 @@ class EventDescriptor:
     singular: str
     plural: str
     target: str
+
+
+class GitHubEvents(str, Enum):
+    PushEvent = "PushEvent"
+    CreateEvent = "CreateEvent"
+    DeleteEvent = "DeleteEvent"
+    ForkEvent = "ForkEvent"
+    WatchEvent = "WatchEvent"
+    PublicEvent = "PublicEvent"
+    IssuesEvent = "IssuesEvent"
+    IssueCommentEvent = "IssueCommentEvent"
+    PullRequestEvent = "PullRequestEvent"
+    PullRequestReviewEvent = "PullRequestReviewEvent"
+    PullRequestReviewCommentEvent = "PullRequestReviewCommentEvent"
+    ReleaseEvent = "ReleaseEvent"
+    MemberEvent = "MemberEvent"
+    GollumEvent = "GollumEvent"
 
 
 EVENT_DESCRIPTORS: dict[str, EventDescriptor] = {
@@ -54,7 +72,5 @@ EVENT_DESCRIPTORS: dict[str, EventDescriptor] = {
     "ReleaseEvent": EventDescriptor("Published", "release", "releases", "in"),
     "MemberEvent": EventDescriptor(
         "Modified", "collaborator permission", "collaborator permissions", "on"),
-    "GollumEvent": EventDescriptor("Edited", "wiki page", "wiki pages", "in"),
-    "DiscussionEvent": EventDescriptor("Started or updated", "discussion", "discussions", "in"),
-    "DiscussionCommentEvent": EventDescriptor("Commented on", "discussion", "discussions", "in"),
+    "GollumEvent": EventDescriptor("Edited", "wiki page", "wiki pages", "in")
 }

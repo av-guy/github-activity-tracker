@@ -6,6 +6,8 @@ from kink import di
 from . import bootstrap
 
 from .activities.summary import ActivitySummary
+from .activities.descriptors import GitHubEvents
+
 from .providers.github import EventsProvider, GitHub
 from .caches.in_memory import CacheProvider, InMemory
 
@@ -27,9 +29,23 @@ NO_CACHE_ARGUMENT = Annotated[
     )
 ]
 
+EVENTS_FILTER = Annotated[
+    GitHubEvents,
+    Option(
+        "--filter",
+        "-f",
+        case_sensitive=False,
+        help="The event type to use in the filter."
+    )
+]
+
 
 @app.command()
-def main(user_name: USER_NAME_ARGUMENT, no_cache: NO_CACHE_ARGUMENT = False):
+def main(
+    user_name: USER_NAME_ARGUMENT,
+    no_cache: NO_CACHE_ARGUMENT = False,
+    event_filter: EVENTS_FILTER = None
+):
     github_provider: EventsProvider[GitHub] = di[EventsProvider[GitHub]]
     cache_provider: CacheProvider[InMemory] = di[CacheProvider[InMemory]]
 
@@ -43,7 +59,8 @@ def main(user_name: USER_NAME_ARGUMENT, no_cache: NO_CACHE_ARGUMENT = False):
         activity_summary = ActivitySummary(
             user_name,
             github_provider.provider,
-            cache=cache_provider.cache
+            cache=cache_provider.cache,
+            event_filter=event_filter
         )
 
         activity_summary.run(no_cache=no_cache)
