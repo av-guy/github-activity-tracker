@@ -43,8 +43,8 @@ python -m activity_tracker <username>
 ```
 
 By default, results are cached between runs.
-  
-Use --no-cache to bypass the cache, or --filter to show only specific event types (for example, PushEvent or PullRequestEvent).
+
+Use `--no-cache` to bypass the cache, or `--filter` to show only specific event types (for example, PushEvent or PullRequestEvent).
 
 Example:
 
