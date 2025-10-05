@@ -1,4 +1,4 @@
-from typing import Any, Callable
+from typing import Any, Callable, Generic, TypeVar
 from collections import defaultdict
 from requests import get
 
@@ -11,8 +11,17 @@ from .events import (
     handle_pull_request_event
 )
 
+from ..protocols.provider import RepositoryProvider
 
-class GitHubProvider:
+P = TypeVar("P", bound=RepositoryProvider)
+
+
+class Provider(Generic[P]):
+    def __init__(self, provider: P):
+        self.provider = provider
+
+
+class GitHub:
     API_URL_TEMPLATE = "https://api.github.com/users/{username}/events/public"
     HEADERS = {"Accept": "application/vnd.github+json"}
 

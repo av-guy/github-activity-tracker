@@ -2,8 +2,6 @@ from typing import Protocol, Any
 
 
 class RepositoryProvider(Protocol):
-    """Generic protocol for repository activity providers."""
-
     def fetch_events(self, username: str) -> list[dict[str, Any]]:
         """Retrieve public activity events for a given username."""
 
