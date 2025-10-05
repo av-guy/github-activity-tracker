@@ -35,7 +35,7 @@ EVENTS_FILTER = Annotated[
         "--filter",
         "-f",
         case_sensitive=False,
-        help="The event type to use in the filter."
+        help="Filter by the specific event, only including those in output."
     )
 ]
 
