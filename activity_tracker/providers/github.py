@@ -2,7 +2,7 @@ from typing import Any, Callable, Generic, TypeVar
 from collections import defaultdict
 from requests import get
 
-from .events import (
+from .handlers import (
     handle_create_event,
     handle_default_event,
     handle_issue_comment_event,
@@ -38,7 +38,8 @@ class GitHub:
         response = get(url, headers=self.HEADERS, timeout=5.0)
         response.raise_for_status()
 
-        return response.json()
+        json_response = response.json()
+        return json_response
 
     def summarize_events(self, events: list[dict[str, Any]]) -> dict[tuple[str, str], int]:
         groups: dict[tuple[str, str], int] = defaultdict(int)

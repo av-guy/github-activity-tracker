@@ -1,11 +1,11 @@
 from typing import Annotated
 from typer import Typer, Argument, Option
+from rich.progress import Progress, SpinnerColumn, TextColumn
 from kink import di
 
 from . import bootstrap
 
 from .activities.summary import ActivitySummary
-
 from .providers.github import EventsProvider, GitHub
 from .caches.in_memory import CacheProvider, InMemory
 
@@ -29,15 +29,24 @@ NO_CACHE_ARGUMENT = Annotated[
 
 
 @app.command()
-def main(user_name: USER_NAME_ARGUMENT, cache: NO_CACHE_ARGUMENT = False):
+def main(user_name: USER_NAME_ARGUMENT, no_cache: NO_CACHE_ARGUMENT = False):
     github_provider: EventsProvider[GitHub] = di[EventsProvider[GitHub]]
     cache_provider: CacheProvider[InMemory] = di[CacheProvider[InMemory]]
 
-    if cache:
-        print("Should not cache")
+    with Progress(
+        SpinnerColumn(),
+        TextColumn("[progress.description]{task.description}"),
+        transient=True
+    ) as progress:
+        progress.add_task(description="Retrieving Events...", total=None)
 
-    activity_summary = ActivitySummary(user_name, github_provider.provider)
-    activity_summary.run()
+        activity_summary = ActivitySummary(
+            user_name,
+            github_provider.provider,
+            cache=cache_provider.cache
+        )
+
+        activity_summary.run(no_cache=no_cache)
 
 
 if __name__ == "__main__":
