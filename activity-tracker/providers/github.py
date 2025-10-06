@@ -45,7 +45,7 @@ class GitHub:
         groups: dict[tuple[str, str], int] = defaultdict(int)
 
         for event in events:
-            event_type = event.get("type")
+            event_type: str = event.get("type", "")
             handler = self._HANDLERS.get(event_type, handle_default_event)
             key, repo, count = handler(event)
             groups[(key, repo)] += count
