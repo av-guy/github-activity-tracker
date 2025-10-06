@@ -6,7 +6,7 @@ A simple command-line tool that fetches and summarizes a user's public GitHub ac
 
 ## Installation
 
-Clone the repository and create a virtual environment:
+Clone the repository:
 
 ```bash
 git clone https://github.com/av-guy/github-activity-tracker.git
@@ -33,13 +33,13 @@ pip install -r requirements.txt
 Show available commands and options:
 
 ```bash
-python -m activity_tracker --help
+python -m activity-tracker --help
 ```
 
 Run the tool for a GitHub username:
 
 ```bash
-python -m activity_tracker <username>
+python -m activity-tracker <username>
 ```
 
 By default, results are cached between runs.
@@ -49,5 +49,5 @@ Use `--no-cache` to bypass the cache, or `--filter` to show only specific event 
 Example:
 
 ```bash
-python -m activity_tracker <username> --filter pullrequestevent
+python -m activity-tracker <username> --filter pullrequestevent
 ```
