@@ -1,4 +1,4 @@
-# GitHub Activity CLI
+# GitHub Activity Tracker CLI
 
 A simple command-line tool that fetches and summarizes a user's public GitHub activity, with optional caching and event filtering.
 
